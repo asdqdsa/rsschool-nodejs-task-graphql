@@ -1,6 +1,14 @@
 import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 import { createGqlResponseSchema, gqlResponseSchema } from './schemas.js';
-import { graphql } from 'graphql';
+import {
+  GraphQLList,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString,
+  graphql,
+} from 'graphql';
+import { UserType } from './types/user.js';
 
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
   const { prisma } = fastify;
@@ -15,9 +23,40 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async handler(req) {
-      // return graphql();
+      return graphql({
+        schema,
+        source: req.body.query,
+        variableValues: req.body.variables,
+      });
     },
   });
 };
+
+// type RootQueryType {
+//   memberTypes: [MemberType!]!
+//   memberType(id: MemberTypeId!): MemberType
+//   users: [User!]!
+//   user(id: UUID!): User
+//   posts: [Post!]!
+//   post(id: UUID!): Post
+//   profiles: [Profile!]!
+//   profile(id: UUID!): Profile
+// }
+
+const schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'RootQuery',
+    fields: {
+      users: {
+        type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(UserType))),
+        resolve: async () => {},
+      },
+      hello: {
+        type: GraphQLString,
+        resolve: async () => 'Hello, world!',
+      },
+    },
+  }),
+});
 
 export default plugin;
