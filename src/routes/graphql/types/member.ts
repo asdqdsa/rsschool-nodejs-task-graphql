@@ -6,7 +6,7 @@ import {
   GraphQLObjectType,
 } from 'graphql';
 
-const MemberTypeId = new GraphQLEnumType({
+export const MemberTypeIdEnum = new GraphQLEnumType({
   name: 'MemberTypeId',
   description: 'Member id',
   values: {
@@ -19,7 +19,7 @@ const config = {
   name: 'Member',
   description: 'Member type',
   fields: () => ({
-    id: { type: MemberTypeId },
+    id: { type: MemberTypeIdEnum },
     discount: { type: new GraphQLNonNull(GraphQLFloat) },
     postsLimitPerMonth: { type: new GraphQLNonNull(GraphQLInt) },
   }),

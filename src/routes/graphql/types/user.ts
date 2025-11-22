@@ -10,7 +10,7 @@ const config = {
     id: { type: new GraphQLNonNull(UUIDType) },
     name: { type: new GraphQLNonNull(GraphQLString) },
     balance: { type: new GraphQLNonNull(GraphQLString) },
-    profile: ProfileType,
+    profile: { type: ProfileType },
     posts: { type: new GraphQLNonNull(new GraphQLList(PostType)) },
     userSubscribedTo: { type: new GraphQLNonNull(new GraphQLList(UserType)) },
     subscribedToUser: { type: new GraphQLNonNull(new GraphQLList(UserType)) },
