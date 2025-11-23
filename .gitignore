@@ -60,7 +60,19 @@ test/types/index.js
 # compiled app
 dist
 
-.env
 
 database.db
 database.db-journal
+
+
+# Spec
+*spec.*
+
+# Env
+.env
+.env.local
+.env.development
+.env.production
+
+!.evn.example
+!.evn.*.example
